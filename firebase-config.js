@@ -1,38 +1,28 @@
+// firebase.js (MODERN, WORKING)
+
+import { initializeApp, getApps } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
-    apiKey: "PASTE_YOUR_API_KEY_HERE",
-    authDomain: "PASTE_YOUR_AUTH_DOMAIN_HERE",
-    projectId: "PASTE_YOUR_PROJECT_ID_HERE",
-    storageBucket: "PASTE_YOUR_STORAGE_BUCKET_HERE",
-    messagingSenderId: "PASTE_YOUR_SENDER_ID_HERE",
-    appId: "PASTE_YOUR_APP_ID_HERE"
+  apiKey: "AlzaSyAs6tp0tBOXg8AIZp8jELgedJjHSSMOE6I",
+  authDomain: "minimessenger-50bd0.firebaseapp.com", // ⚠️ VERY IMPORTANT
+  projectId: "minimessenger-50bd0",
+  storageBucket: "minimessenger-50bd0.firebasestorage.app",
+  messagingSenderId: "896519298108",
+  appId: "1:896519298108:web:10ee1933e921e4eaa7b739",
 };
 
-const IMGBB_API_KEY = "PASTE_YOUR_IMGBB_API_KEY_HERE";
+const app = getApps().length
+  ? getApps()[0]
+  : initializeApp(firebaseConfig);
 
-firebase.initializeApp(firebaseConfig);
-
-const db = firebase.firestore();
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
-
-db.settings({
-    timestampsInSnapshots: true,
-    cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED
-});
-
-db.enablePersistence({
-    synchronizeTabs: true
-}).catch((err) => {
-    if (err.code == 'failed-precondition') {
-        console.log('Persistence failed: Multiple tabs open');
-    } else if (err.code == 'unimplemented') {
-        console.log('Persistence not supported');
-    }
-});
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const provider = new GoogleAuthProvider();
 
 provider.setCustomParameters({
-    prompt: 'select_account'
+  prompt: "select_account",
 });
 
-console.log('✅ Firebase initialized successfully!');
-console.log('📁 Project:', firebaseConfig.projectId);
+console.log("✅ Firebase initialized (MODULAR)");
