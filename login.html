@@ -533,10 +533,22 @@
     </script>
 </body>
 </html>
-<script type="module">
-  import { loginWithGoogle } from "./auth.js";
+<input id="user" placeholder="Username" />
+<input id="pass" type="password" placeholder="Password" />
+<button onclick="login()">Login</button>
 
-  document
-    .getElementById("googleLogin")
-    .addEventListener("click", loginWithGoogle);
+<script>
+async function login() {
+  const res = await fetch("/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: user.value,
+      password: pass.value
+    })
+  });
+
+  if (res.ok) location.href = "/chat.html";
+  else alert("Login failed");
+}
 </script>
